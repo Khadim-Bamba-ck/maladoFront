@@ -59,17 +59,17 @@ export class LoginPage implements OnInit {
     } */
 
 
-  // connexion(){
-  //   this.authservice.connexion({ data: new MaladoRequest('', '', '', this.passwordField, this.loginAd) }).subscribe( 
-  //     //next en cas de success
-  //     (data) =>{
-  //       localStorage.setItem('loginAd', this.loginField)
-  //       if (this.correctPassword) {
-  //         this.router.navigate(['dashboard2'])
-  //       }else
-  //       this.router.navigate(['login'])
-  //     }
-  //   )
-  // }
+  connexion(){
+    this.authservice.connexion(new MaladoRequest('', '', '', this.passwordField, this.loginAd)).subscribe( 
+      //next en cas de success
+      (data) =>{
+        localStorage.setItem('loginAd', this.loginField)
+        if (this.correctPassword) {
+          this.router.navigate(['dashboard2'])
+        }else
+        this.router.navigate(['login'])
+      }
+    )
+  }
 
 }

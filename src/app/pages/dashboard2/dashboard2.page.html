@@ -30,7 +30,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="4">
-        <a (click)="OraclePopper('oracle','reset password oracle','i','Demande pas encore prise en charge','Saisir votre mot de passe oracle')">
+        <a (click)="presentPrompt('reset','oracle','Saisir votre mot de passe oracle','i','Demande pas encore prise en charge')">
         <ion-card color="white">
           <ion-icon src="../../../assets/images/password.svg"></ion-icon>
           <ion-text>
@@ -42,8 +42,8 @@
       </a>
       </ion-col>
       <ion-col size="4">
-        <a (click)=" WindowsPopper('windows','reset password AD','i','Demande pas encore prise en charge','Saisir votre mot de passe AD')">
-          <ion-card color="white">
+        <a (click)="presentPrompt('reset','windows','Saisir votre mot de passe AD','Demande pas encore prise en charge')">
+        <ion-card color="white">
           <ion-icon src="../../../assets/images/password.svg"></ion-icon>
           <ion-text>
             <small><br>reset<br>
@@ -54,7 +54,7 @@
       </a>
       </ion-col>
       <ion-col size="4">
-        <a (click)="NessicoPopper('nessico','liberation de session','i','Demande pas encore prise en charge','Saisir votre mot de passe Nessico')">
+        <a (click)="presentPrompt('reset password','nessico','Saisir votre mot de passe nessico','i','Demande pas encore prise en charge')">
           <ion-card color="white">
           <ion-icon src="../../../assets/images/password.svg"></ion-icon>
           <ion-text>
@@ -145,11 +145,11 @@
         </div>
         <div class="menu-items">
           <ion-item>
-           <a (click)="setting()"> <ion-icon name="settings"></ion-icon>Parametres</a>
+           <a (click)="setting()"> <ion-icon name="settings"></ion-icon>Parametre</a>
           </ion-item>
           
           <ion-item>
-            <a (click)="historique()"> <ion-icon name="document"></ion-icon>Mes Demandes</a>
+            <a (click)="historique()"> <ion-icon name="document"></ion-icon>Demande</a>
           </ion-item>
           <ion-item>
             <a (click)="assistance()"><ion-icon name="people"></ion-icon>Assistance</a>

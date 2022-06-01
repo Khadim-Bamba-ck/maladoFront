@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-
 import { AlertController, LoadingController } from '@ionic/angular';
 import { DemandeRequest } from 'src/model/demandeRequest.model';
 import { AuthService } from 'src/app/services/auth.service';
-export type EntityResponseType = HttpResponse<DemandeRequest>;
 
 @Component({
   selector: 'app-windows',
@@ -64,10 +61,9 @@ export class WindowsPage implements OnInit {
            text: 'soumettre',
            handler: data => {
      
-             this.authservice.demandeWindows(new DemandeRequest(action, application, this.loginad,data.password)).subscribe( 
-              // (res: EntityResponseType) =>{
-              (res) =>{
-                console.log(res)
+             this.authservice.demande(new DemandeRequest(action, application, this.loginad,data.password)).subscribe( 
+               (data: string) =>{
+                 console.log(data)
                  this.alertMsg="Votre demande a ete bien enregistrer merci"
                  this.isAlertSuccess = true;
                  

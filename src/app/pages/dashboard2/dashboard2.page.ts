@@ -1,12 +1,10 @@
 import { Component,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-
 import { MenuController } from '@ionic/angular';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { DemandeRequest } from 'src/model/demandeRequest.model';
 import { AuthService } from 'src/app/services/auth.service';
-export type EntityResponseType = HttpResponse<DemandeRequest>;
+import { config } from "../../config/config";
 
 @Component({
   selector: 'app-dashboard2',
@@ -17,7 +15,9 @@ export class Dashboard2Page implements OnInit {
   isAlertDanger=false;
   isAlertSuccess=false;
   alertMsg="";
-  loginad=localStorage.getItem('loginad');
+  userId= localStorage.getItem('loginAd');
+  date_demande= new Date();
+  date_retour=new Date();
   public menustatus: boolean;
   constructor(private router: Router,
     private authservice : AuthService,
@@ -25,9 +25,7 @@ export class Dashboard2Page implements OnInit {
     private alertCtrl : AlertController
     ) { }
   ngOnInit() {
-    // setInterval( () =>{
-      this.loginad;
-    // },1000);
+
     setInterval( () =>{
       if((this.isAlertDanger==true )||(this.isAlertSuccess==true)){
         this.isAlertDanger=false;
@@ -90,10 +88,11 @@ export class Dashboard2Page implements OnInit {
     this.router.navigate(['connexion'])
   }
 
-async OraclePopper(application:string,action:string,status:string,message:string,messageAlert:string) {
+async presentPrompt(action:string,nom_application:string,messageAlert:string,status:string,message:string) {
  await this.alertCtrl.create({
 
-    header:"Compte "+application,
+    header:"Compte "+nom_application,
+    //cssClass:"rgb(247,247,247)",
     cssClass: 'alertDanger',
     subHeader:"",
     message:"<small>"+messageAlert+"</small>",
@@ -110,20 +109,25 @@ async OraclePopper(application:string,action:string,status:string,message:string
         text: 'annuler',
         role: 'cancel',
         handler: data => {
-          console.log('demande annuler');
+          console.log('Cancel clicked');
         }
       },
       {
         text: 'soumettre',
         handler: data => {
-          this.authservice.demandeOracle(new DemandeRequest(application,data.password,action,status,message,this.loginad)).subscribe( 
-            (data) =>{
+  
+          this.authservice.demande(new DemandeRequest(nom_application, action ,localStorage.getItem("loginAd"),data.password,this.date_demande,this.date_retour,message,status)).subscribe( 
+            (data: string) =>{
               console.log(data)
               this.alertMsg="Votre demande a ete bien enregistrer merci"
-              this.isAlertSuccess = true;     
+              this.isAlertSuccess = true;
+              
+              
             },
             (error) =>{
+
               console.log(error)
+              //console.log(config.Authorization);
                 this.alertMsg="verifier votre connexion"
                 this.isAlertDanger = true;
             }
@@ -133,100 +137,6 @@ async OraclePopper(application:string,action:string,status:string,message:string
     ]
   }).then(data => data.present());
 }
-
-
-async WindowsPopper(application:string,action:string,status:string,message:string,messageAlert:string) {
-  await this.alertCtrl.create({
- 
-     header:"Compte "+application,
-     cssClass: 'alertDanger',
-     subHeader:"",
-     message:"<small>"+messageAlert+"</small>",
-     inputs: [
-       {
-         name: 'password',
-         placeholder: 'mot de passe',
-         type: 'text',  
-       }
-     ],
-     
-     buttons: [
-       {
-         text: 'annuler',
-         role: 'cancel',
-         handler: data => {
-           console.log('demande annuler');
-         }
-       },
-       {
-         text: 'soumettre',
-         handler: data => {
-           this.authservice.demandeWindows(new DemandeRequest(application,data.password,action,status,message,this.loginad)).subscribe( 
-             (data) =>{
-               console.log(data)
-               this.alertMsg="Votre demande a ete bien enregistrer merci"
-               this.isAlertSuccess = true;     
-             },
-             (error) =>{
-               console.log(error)
-                 this.alertMsg="verifier votre connexion"
-                 this.isAlertDanger = true;
-             }
-           )
-         }
-       }
-     ]
-   }).then(data => data.present());
- }
-
-
-
- async NessicoPopper(application:string,action:string,status:string,message:string,messageAlert:string) {
-  await this.alertCtrl.create({
- 
-     header:"Compte "+application,
-     cssClass: 'alertDanger',
-     subHeader:"",
-     message:"<small>"+messageAlert+"</small>",
-     inputs: [
-       {
-         name: 'password',
-         placeholder: 'mot de passe',
-         type: 'text',  
-       }
-     ],
-     
-     buttons: [
-       {
-         text: 'annuler',
-         role: 'cancel',
-         handler: data => {
-           console.log('demande annuler');
-         }
-       },
-       {
-         text: 'soumettre',
-         handler: data => {
-           this.authservice.demandeNessico(new DemandeRequest(application,data.password,action,status,message,this.loginad)).subscribe( 
-             (data) =>{
-               console.log(data)
-               this.alertMsg="Votre demande a ete bien enregistrer merci"
-               this.isAlertSuccess = true;     
-             },
-             (error) =>{
-               console.log(error)
-                 this.alertMsg="verifier votre connexion"
-                 this.isAlertDanger = true;
-             }
-           )
-         }
-       }
-     ]
-   }).then(data => data.present());
- }
-
-
-
 
 
 

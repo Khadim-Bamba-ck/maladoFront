@@ -46,23 +46,23 @@ export class HistoriquePage implements OnInit {
   // }
 
   listeDemande(){
-    this.authservice.getDemande(new DemandeRequest('','','','','',this.loginad)).subscribe( 
-    //next en cas de success
-    (data) =>{
-      // data = JSON.parse(data);
-      //Aller a la page suivante 
-      // this.todoList = JSON.parse(data);
-      console.log(data.body)
-      // console.log(data)
+  //   this.authservice.getDemande(new DemandeRequest('','','','','',this.loginad)).subscribe( 
+  //   //next en cas de success
+  //   (data) =>{
+  //     // data = JSON.parse(data);
+  //     //Aller a la page suivante 
+  //     // this.todoList = JSON.parse(data);
+  //     console.log(data.body)
+  //     // console.log(data)
 
-    },
-    //  en cas error 
-    (error) =>{
-      // if(error.status==404){
-        console.log(error)
+  //   },
+  //   //  en cas error 
+  //   (error) =>{
+  //     // if(error.status==404){
+  //       console.log(error)
 
-    }
-  )
+  //   }
+  // )
 } 
 
 }

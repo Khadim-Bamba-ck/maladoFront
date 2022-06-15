@@ -12,10 +12,6 @@ import { analyzeAndValidateNgModules } from "@angular/compiler";
  })
 export class AuthService {
 
-    public clientId = 'admin';
-
-
-
     constructor(private http: HttpClient){
 
 
@@ -103,7 +99,7 @@ export class AuthService {
     {
         console.log(dataRequest);
            
-        return this.http.post(environnement.localurla + this.url +"authenticate-mobile", dataRequest, {headers:config.jsonHeader, responseType: 'text',observe: 'response'});
+        return this.http.post(environnement.localurla + 'api/' +'authenticate-mobile', dataRequest, {headers:config.jsonHeader, responseType: 'text',observe: 'response'});
 
     }
     tokenValidation(data:MaladoRequest){

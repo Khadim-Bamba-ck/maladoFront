@@ -5,6 +5,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { DemandeRequest } from 'src/model/demandeRequest.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { config } from "../../config/config";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard2',
@@ -19,6 +20,7 @@ export class Dashboard2Page implements OnInit {
   date_demande= new Date();
   date_retour=new Date();
   public menustatus: boolean;
+  
   constructor(private router: Router,
     private authservice : AuthService,
     private menu: MenuController, 
@@ -119,8 +121,13 @@ async presentPrompt(action:string,nom_application:string,messageAlert:string,sta
           this.authservice.demande(new DemandeRequest(nom_application, action ,localStorage.getItem("loginAd"),data.password,this.date_demande,this.date_retour,message,status)).subscribe( 
             (data: string) =>{
               console.log(data)
-              this.alertMsg="Votre demande a ete bien enregistrer merci"
-              this.isAlertSuccess = true;
+              //this.alertMsg="Votre demande a ete bien enregistrer merci"
+              //this.showSuccessAlert();
+              Toast.fire({
+                icon: 'success',
+                title: 'Votre demande a été bien prise en compte merci!'
+              })
+              //this.isAlertSuccess = true;
               
               
             },
@@ -128,8 +135,9 @@ async presentPrompt(action:string,nom_application:string,messageAlert:string,sta
 
               console.log(error)
               //console.log(config.Authorization);
-                this.alertMsg="verifier votre connexion"
-                this.isAlertDanger = true;
+                //this.alertMsg="verifier votre connexion"
+                this.showErrorsAlert();
+                //this.isAlertDanger = true;
             }
           )
         }
@@ -137,7 +145,25 @@ async presentPrompt(action:string,nom_application:string,messageAlert:string,sta
     ]
   }).then(data => data.present());
 }
+showSuccessAlert() {
+  Swal.fire('Success!', 'Votre demande a été bien enregistré', 'success')
+}
+showErrorsAlert() {
+  Swal.fire('Error!', 'Votre demande a échoué !', 'error')
+}
 
 
 
 }
+const Toast = Swal.mixin({
+  toast: true,
+  //position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
